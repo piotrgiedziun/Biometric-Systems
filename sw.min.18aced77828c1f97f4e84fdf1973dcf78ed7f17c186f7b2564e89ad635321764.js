@@ -1,0 +1,1 @@
+navigator.serviceWorker&&navigator.serviceWorker.register("/biometric-systems/sw.js",{scope:"/biometric-systems/"})
