@@ -3,11 +3,11 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=description content="Introduction #  Introduction to Machine Learning and Python - required to complete the course.
-  Pre-read (Required) #    https://www.kaggle.com/learn/python (Lessons 1-6)  https://www.kaggle.com/learn/intro-to-deep-learning (Lessons 1-3)  https://www.kaggle.com/learn/computer-vision (Lessons 1-4)  Literature (Optional) #   Christopher M. Bishop. (2007). Pattern Recognition and Machine Learning Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science  Content #   Introduction to the Google Colab environment, characteristics of working in an interactive environment Introduction to Python.">
+  Pre-read (Required) #    https://www.kaggle.com/learn/python (Lessons 1-6)  https://www.kaggle.com/learn/intro-to-deep-learning (Lessons 1-3)  https://www.kaggle.com/learn/computer-vision (Lessons 1-4)  Literature (Optional) #   Christopher M. Bishop. (2007). Pattern Recognition and Machine Learning Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science  MNIST Demo #    // Variables for referencing the canvas and 2dcanvas context var canvas, ctx; // Variables to keep track of the mouse position and left-button status var mouseX, mouseY, mouseDown = 0; // Variables to keep track of the touch position var touchX, touchY; // Keep track of the old/last position when drawing a line // We set it to -1 at the start to indicate that we don't have a good value for it yet var lastX, lastY = -1; // Draws a line between the specified position on the supplied canvas name // Parameters are: A canvas context, the x position, the y position, the size of the dot function drawLine(ctx, x, y, size) { // If lastX is not set, set lastX and lastY to the current position if (lastX == -1) { lastX = x; lastY = y; } // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque) r = 255; g = 255; b = 255; a = 255; // Select a fill style ctx.">
 <meta name=theme-color content="#FFFFFF">
 <meta name=color-scheme content="light dark"><meta property="og:title" content="Lab 1">
 <meta property="og:description" content="Introduction #  Introduction to Machine Learning and Python - required to complete the course.
-  Pre-read (Required) #    https://www.kaggle.com/learn/python (Lessons 1-6)  https://www.kaggle.com/learn/intro-to-deep-learning (Lessons 1-3)  https://www.kaggle.com/learn/computer-vision (Lessons 1-4)  Literature (Optional) #   Christopher M. Bishop. (2007). Pattern Recognition and Machine Learning Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science  Content #   Introduction to the Google Colab environment, characteristics of working in an interactive environment Introduction to Python.">
+  Pre-read (Required) #    https://www.kaggle.com/learn/python (Lessons 1-6)  https://www.kaggle.com/learn/intro-to-deep-learning (Lessons 1-3)  https://www.kaggle.com/learn/computer-vision (Lessons 1-4)  Literature (Optional) #   Christopher M. Bishop. (2007). Pattern Recognition and Machine Learning Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science  MNIST Demo #    // Variables for referencing the canvas and 2dcanvas context var canvas, ctx; // Variables to keep track of the mouse position and left-button status var mouseX, mouseY, mouseDown = 0; // Variables to keep track of the touch position var touchX, touchY; // Keep track of the old/last position when drawing a line // We set it to -1 at the start to indicate that we don't have a good value for it yet var lastX, lastY = -1; // Draws a line between the specified position on the supplied canvas name // Parameters are: A canvas context, the x position, the y position, the size of the dot function drawLine(ctx, x, y, size) { // If lastX is not set, set lastX and lastY to the current position if (lastX == -1) { lastX = x; lastY = y; } // Let's use black by setting RGB values to 0, and 255 alpha (completely opaque) r = 255; g = 255; b = 255; a = 255; // Select a fill style ctx.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://piotrgiedziun.github.io/biometric-systems/docs/labs/intro/"><meta property="article:section" content="docs">
 <title>Lab 1 | Biometric Systems</title>
@@ -15,7 +15,7 @@
 <link rel=icon href=/biometric-systems/favicon.png type=image/x-icon>
 <link rel=stylesheet href=/biometric-systems/book.min.46181bc93375ba932026e753b37c40e6ff8bb16a9ef770c78bcc663e4577b1ba.css integrity="sha256-RhgbyTN1upMgJudTs3xA5v+LsWqe93DHi8xmPkV3sbo=" crossorigin=anonymous>
 <script defer src=/biometric-systems/flexsearch.min.js></script>
-<script defer src=/biometric-systems/en.search.min.4eb923e7e5f15cf88ab05520c19d13e759153959e2d9cdecaebcd667a2162a26.js integrity="sha256-Trkj5+XxXPiKsFUgwZ0T51kVOVni2c3srrzWZ6IWKiY=" crossorigin=anonymous></script>
+<script defer src=/biometric-systems/en.search.min.7a8ba21cbfeb790319cc1f39976baa6ed64f924706617f30059f4f8c41e5f5c9.js integrity="sha256-eouiHL/reQMZzB85l2uqbtZPkkcGYX8wBZ9PjEHl9ck=" crossorigin=anonymous></script>
 <script defer src=/biometric-systems/sw.min.18aced77828c1f97f4e84fdf1973dcf78ed7f17c186f7b2564e89ad635321764.js integrity="sha256-GKztd4KMH5f06E/fGXPc947X8XwYb3slZOia1jUyF2Q=" crossorigin=anonymous></script>
 </head>
 <body dir=ltr>
@@ -66,6 +66,7 @@
 <ul>
 <li><a href=#pre-read-required>Pre-read (Required)</a></li>
 <li><a href=#literature-optional>Literature (Optional)</a></li>
+<li><a href=#mnist-demo>MNIST Demo</a></li>
 <li><a href=#content>Content</a></li>
 </ul>
 </li>
@@ -102,6 +103,27 @@ Literature (Optional)
 <li>Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python</li>
 <li>John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science</li>
 </ul>
+<h2 id=mnist-demo>
+MNIST Demo
+<a class=anchor href=#mnist-demo>#</a>
+</h2>
+<head>
+<script src=https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0></script>
+<script type=text/javascript>var mouseDown=0,lastY=-1,mouseX,mouseY,canvas,touchX,touchY,lastX,ctx;function drawLine(c,d,e,f){lastX==-1&&(lastX=d,lastY=e),r=255,g=255,b=255,a=255,c.strokeStyle="rgba("+r+","+g+","+b+","+a/255+")",c.lineCap="round",c.beginPath(),c.moveTo(lastX,lastY),c.lineTo(d,e),c.lineWidth=f,c.stroke(),c.closePath(),lastX=d,lastY=e}function clearCanvas(a,b){b.clearRect(0,0,a.width,a.height),document.getElementById('rightside').innerHTML=''}function sketchpad_mouseDown(){mouseDown=1,drawLine(ctx,mouseX,mouseY,12)}function sketchpad_mouseUp(){mouseDown=0,lastX=-1,lastY=-1}function sketchpad_mouseMove(a){getMousePos(a),mouseDown==1&&drawLine(ctx,mouseX,mouseY,12)}function getMousePos(a){if(!a)var a=event;a.offsetX?(mouseX=a.offsetX,mouseY=a.offsetY):a.layerX&&(mouseX=a.layerX,mouseY=a.layerY)}function sketchpad_touchStart(){getTouchPos(),drawLine(ctx,touchX,touchY,12),event.preventDefault()}function sketchpad_touchEnd(){lastX=-1,lastY=-1}function sketchpad_touchMove(a){getTouchPos(a),drawLine(ctx,touchX,touchY,12),event.preventDefault()}function getTouchPos(a){var b;a||(a=event),a.touches&&a.touches.length==1&&(b=a.touches[0],touchX=b.pageX-b.target.offsetLeft,touchY=b.pageY-b.target.offsetTop)}async function init(){var a,b;canvas=document.getElementById('sketchpad'),canvas.getContext&&(ctx=canvas.getContext('2d')),ctx&&(canvas.addEventListener('mousedown',sketchpad_mouseDown,!1),canvas.addEventListener('mousemove',sketchpad_mouseMove,!1),window.addEventListener('mouseup',sketchpad_mouseUp,!1),canvas.addEventListener('touchstart',sketchpad_touchStart,!1),canvas.addEventListener('touchend',sketchpad_touchEnd,!1),canvas.addEventListener('touchmove',sketchpad_touchMove,!1)),a=document.getElementById('load'),b=document.getElementById('demo'),a.style.display='none',model=await tf.loadLayersModel('../lab1/model.json'),b.style.display='block'}function predict(){var c,a,b;const g=ctx.getImageData(0,0,140,140);c=tf.browser.fromPixels(g,1),a=tf.image.resizeBilinear(c,[28,28]),a=tf.cast(a,'float32');const d=a.expandDims(1).reshape([1,28,28,1]).div(tf.scalar(255));console.log('xdf',d.shape);const f=model.predict(d),e=f.dataSync();b=!1;for(index=0;index<e.length;index++)e[index]>.5&&(b=!0,document.getElementById('rightside').innerHTML=index);b||(document.getElementById('rightside').innerHTML='-')}</script>
+<style>#mnistapp{-webkit-touch-callout:none;-webkit-user-select:none;-khtml-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.rightside{width:140px;height:125px;background-color:#def;border-radius:4px;font-size:70px;text-align:center}.leftside{width:150px;height:200px}#sketchpad{float:left;height:140px;width:140px;border:2px solid #888;border-radius:4px;position:relative;background-color:#000}#demo{display:none}</style>
+</head>
+<div id=load>
+<input type=submit value="Load demo" onclick=init()>
+</div>
+<div id=demo>
+<div class=leftside>
+<canvas id=sketchpad height=140 width=140></canvas>
+<input type=submit value=Predict onclick=predict()>
+<input type=submit value=Clear onclick=clearCanvas(canvas,ctx)>
+</div>
+<div id=rightside class=rightside>
+</div>
+</div>
 <h2 id=content>
 Content
 <a class=anchor href=#content>#</a>
@@ -139,6 +161,7 @@ Content
 <ul>
 <li><a href=#pre-read-required>Pre-read (Required)</a></li>
 <li><a href=#literature-optional>Literature (Optional)</a></li>
+<li><a href=#mnist-demo>MNIST Demo</a></li>
 <li><a href=#content>Content</a></li>
 </ul>
 </li>
