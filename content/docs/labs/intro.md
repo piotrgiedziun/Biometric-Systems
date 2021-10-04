@@ -21,6 +21,10 @@ Introduction to Machine Learning and Python - required to complete the course.
 - Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python
 - John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science
 
+## MNIST Demo
+
+{{< include-html "content/docs/labs/lab1/intro_mnist.html" >}}
+
 ## Content
 
 - Introduction to the Google Colab environment, characteristics of working in an interactive environment
