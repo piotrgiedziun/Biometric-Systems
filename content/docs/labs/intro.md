@@ -21,7 +21,7 @@ Introduction to Machine Learning and Python - required to complete the course.
 - Sebastian Raschka (2019). Python Machine Learning: Machine Learning and Deep Learning with Python
 - John M. Zelle, Guido van Rossum. (2016). Python Programming: An Introduction to Computer Science
 
-## Demo
+## Demo project
 
 This is a handwritten digit recognizer created during the class. It's able to recognize single digit (0-9).
 
