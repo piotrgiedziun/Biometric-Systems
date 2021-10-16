@@ -9,6 +9,8 @@ Introduction to Machine Learning and Python - required to complete the course.
 
 {{< youtube aircAruvnKk >}}
 
+{{< youtube VwVg9jCtqaU >}}
+
 ## Pre-read (Required)
 
 - https://www.kaggle.com/learn/python (Lessons 1-6)
