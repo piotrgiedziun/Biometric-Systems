@@ -7,6 +7,8 @@ weight: 0
 
 Face detection, face recognition, deep fakes.
 
+{{< youtube VwVg9jCtqaU >}}
+
 ## Pre-read (Required)
 
 - https://www.tensorflow.org/guide/keras/sequential_model
