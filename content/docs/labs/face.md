@@ -15,6 +15,10 @@ Face detection, face recognition, deep fakes.
 - https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_hog.html
 - https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html
 
+## Demo
+
+[Example web app](https://b8zqw.csb.app/)
+
 ## Content
 
 - Introduction to face detection algorithms (Histogram of Oriented Gradients, Haar Cascades, Deep Neural Network). The aim of the task is to get to know the methods and their strengths and weaknesses.
