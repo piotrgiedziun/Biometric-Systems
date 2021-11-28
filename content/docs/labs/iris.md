@@ -7,6 +7,8 @@ weight: 0
 
 Identifying the characteristics of the iris is a similar process to identifying it with the facial pattern and fingerprint. The system segments the image of the iris and then converts it into a pattern which is compared with the pattern. Iris readers often use an additional system to illuminate the eye with near-infrared light.
 
+{{< youtube OfKnA91zs9I >}}
+
 ## Pre-read (Required)
 
 - https://www.tensorflow.org/addons/tutorials/losses_triplet
