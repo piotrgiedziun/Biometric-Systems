@@ -1,13 +1,13 @@
 ---
-title: Lab 3
+title: Lab 3 - Iris
 weight: 0
 ---
 
-# Identification system based on the characteristics of the iris
+# Iris recognition
 
 Identifying the characteristics of the iris is a similar process to identifying it with the facial pattern and fingerprint. The system segments the image of the iris and then converts it into a pattern which is compared with the pattern. Iris readers often use an additional system to illuminate the eye with near-infrared light.
 
-{{< youtube OfKnA91zs9I >}}
+{{< youtube XI066IGEONw >}}
 
 ## Pre-read (Required)
 
@@ -15,7 +15,7 @@ Identifying the characteristics of the iris is a similar process to identifying 
 - https://www.tensorflow.org/tensorboard/tensorboard_projector_plugin
 - https://www.v7labs.com/blog/image-segmentation-guide
 
-## Content
+## Class content
 
 - Introduction to the segmentation and related metrics (IoU, Dice score).
 - Analysis of classic algorithms for automatic detection and segmentation of the iris (Geodesic Active Contours, SuperPixel Segmentation - SPS, Hough Transform).

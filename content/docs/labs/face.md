@@ -1,11 +1,11 @@
 ---
-title: Lab 2
+title: Lab 2 - Face
 weight: 0
 ---
 
-# Face detection and face recognition
+# Face biometrics
 
-Face detection, face recognition, deep fakes.
+The class covers face detection, face recognition and methods of spoofing them with deep fakes.
 
 {{< youtube VwVg9jCtqaU >}}
 
@@ -19,7 +19,7 @@ Face detection, face recognition, deep fakes.
 
 [Example web app](https://b8zqw.csb.app/)
 
-## Content
+## Class content
 
 - Introduction to face detection algorithms (Histogram of Oriented Gradients, Haar Cascades, Deep Neural Network). The aim of the task is to get to know the methods and their strengths and weaknesses.
 - Implementation of the HOG (Histogram of Oriented Gradients) algorithm to detect characteristic points of the face.

@@ -1,5 +1,5 @@
 ---
-title: Lab 1
+title: Lab 1 - Intro
 weight: 0
 ---
 
@@ -27,7 +27,7 @@ This is a handwritten digit recognizer created during the class. It's able to re
 
 {{< include-html "content/docs/labs/lab1/intro_mnist.html" >}}
 
-## Content
+## Class content
 
 - Introduction to the Google Colab environment, characteristics of working in an interactive environment
 - Introduction to Python. The basics required to complete the course
