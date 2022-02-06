@@ -1,6 +1,7 @@
 ---
 title: Lab 3 - Iris
 weight: 0
+description: Biometrics - iris segmentation, pupil segmentation, iris recognition.
 ---
 
 # Iris recognition
@@ -14,6 +15,10 @@ Identifying the characteristics of the iris is a similar process to identifying 
 - https://www.tensorflow.org/addons/tutorials/losses_triplet
 - https://www.tensorflow.org/tensorboard/tensorboard_projector_plugin
 - https://www.v7labs.com/blog/image-segmentation-guide
+
+## Demo project
+
+{{< include-html "content/docs/labs/iris/index.html" >}}
 
 ## Class content
 

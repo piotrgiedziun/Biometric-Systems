@@ -1,6 +1,7 @@
 ---
 title: Lab 1 - Intro
 weight: 0
+description: Biometrics - introduction to Machine Learning and Python.
 ---
 
 # Introduction
@@ -23,9 +24,10 @@ Introduction to Machine Learning and Python - required to complete the course.
 
 ## Demo project
 
-This is a handwritten digit recognizer created during the class. It's able to recognize single digit (0-9).
+This is a handwritten digit recognizer created during the class.
+Draw a digit and click on "predict".
 
-{{< include-html "content/docs/labs/lab1/intro_mnist.html" >}}
+{{< include-html "content/docs/labs/intro/index.html" >}}
 
 ## Class content
 

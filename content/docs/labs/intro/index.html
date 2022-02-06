@@ -1,15 +1,14 @@
 <head>
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.9.0"></script>
-  <script type="text/javascript">
-    var canvas, ctx;
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.13.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
 
-    var mouseX,
+  <script type="text/javascript">
+    let canvas, ctx;
+    let mouseX,
       mouseY,
       mouseDown = 0;
-
-    var touchX, touchY;
-
-    var lastX,
+    let touchX, touchY;
+    let lastX,
       lastY = -1;
 
     function drawLine(ctx, x, y, size) {
@@ -18,12 +17,7 @@
         lastY = y;
       }
 
-      r = 255;
-      g = 255;
-      b = 255;
-      a = 255;
-
-      ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + a / 255 + ")";
+      ctx.strokeStyle = "rgba(255, 255, 255, 1)";
       ctx.lineCap = "round";
       ctx.beginPath();
       ctx.moveTo(lastX, lastY);
@@ -38,7 +32,7 @@
 
     function clearCanvas(canvas, ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      document.getElementById("rightside").innerHTML = "";
+      document.getElementById("results").innerHTML = "";
     }
 
     function sketchpad_mouseDown() {
@@ -48,22 +42,18 @@
 
     function sketchpad_mouseUp() {
       mouseDown = 0;
-
       lastX = -1;
       lastY = -1;
     }
 
     function sketchpad_mouseMove(e) {
       getMousePos(e);
-
       if (mouseDown == 1) {
         drawLine(ctx, mouseX, mouseY, 12);
       }
     }
 
     function getMousePos(e) {
-      if (!e) var e = event;
-
       if (e.offsetX) {
         mouseX = e.offsetX;
         mouseY = e.offsetY;
@@ -75,10 +65,8 @@
 
     function sketchpad_touchStart() {
       getTouchPos();
-
       drawLine(ctx, touchX, touchY, 12);
-
-      event.preventDefault();
+      e.preventDefault();
     }
 
     function sketchpad_touchEnd() {
@@ -88,18 +76,14 @@
 
     function sketchpad_touchMove(e) {
       getTouchPos(e);
-
       drawLine(ctx, touchX, touchY, 12);
-
-      event.preventDefault();
+      e.preventDefault();
     }
 
     function getTouchPos(e) {
-      if (!e) var e = event;
-
       if (e.touches) {
         if (e.touches.length == 1) {
-          var touch = e.touches[0];
+          let touch = e.touches[0];
           touchX = touch.pageX - touch.target.offsetLeft;
           touchY = touch.pageY - touch.target.offsetTop;
         }
@@ -115,55 +99,41 @@
         canvas.addEventListener("mousedown", sketchpad_mouseDown, false);
         canvas.addEventListener("mousemove", sketchpad_mouseMove, false);
         window.addEventListener("mouseup", sketchpad_mouseUp, false);
-
         canvas.addEventListener("touchstart", sketchpad_touchStart, false);
         canvas.addEventListener("touchend", sketchpad_touchEnd, false);
         canvas.addEventListener("touchmove", sketchpad_touchMove, false);
       }
-      var loadDiv = document.getElementById("load");
-      var demoDiv = document.getElementById("demo");
-      loadDiv.style.display = "none";
-      model = await tf.loadLayersModel("../lab1/model.json");
-      demoDiv.style.display = "block";
+      document.getElementById("load").style.display = "none";
+      await tf.setBackend("wasm");
+      model = await tf.loadLayersModel("../intro/model.json");
+      document.getElementById("demo").style.display = "block";
     }
 
     function predict() {
       const imageData = ctx.getImageData(0, 0, 140, 140);
 
-      var tfImg = tf.browser.fromPixels(imageData, 1);
-      var smalImg = tf.image.resizeBilinear(tfImg, [28, 28]);
+      let tfImg = tf.browser.fromPixels(imageData, 1);
+      let smalImg = tf.image.resizeBilinear(tfImg, [28, 28]);
       smalImg = tf.cast(smalImg, "float32");
       const tensor = smalImg
         .expandDims(1)
         .reshape([1, 28, 28, 1])
         .div(tf.scalar(255));
-      console.log("xdf", tensor.shape);
 
       const prediction = model.predict(tensor);
       const predictedValues = prediction.dataSync();
-      var isThereAnyPrediction = false;
-      for (index = 0; index < predictedValues.length; index++) {
-        if (predictedValues[index] > 0.5) {
-          isThereAnyPrediction = true;
-          document.getElementById("rightside").innerHTML = index;
-        }
-      }
-      if (!isThereAnyPrediction) {
-        document.getElementById("rightside").innerHTML = "-";
+      const res = document.createTextNode(`id\tscore\n`);
+      results.appendChild(res);
+      for (i = 0; i < predictedValues.length; i++) {
+        const res = document.createTextNode(
+          `${i}\t${Math.round(predictedValues[i] * 10000) / 100}%\n`
+        );
+        results.appendChild(res);
       }
     }
   </script>
 
   <style>
-    .rightside {
-      width: 140px;
-      height: 125px;
-      background-color: #def;
-      border-radius: 4px;
-      font-size: 70px;
-      text-align: center;
-    }
-
     .leftside {
       width: 150px;
       height: 200px;
@@ -177,10 +147,12 @@
       border-radius: 4px;
       position: relative;
       background-color: black;
-      /* Necessary for correct mouse co-ords in Firefox */
     }
     #demo {
       display: none;
+    }
+    input[type="submit"] {
+      background-color: rgb(59, 59, 59);
     }
   </style>
 </head>
@@ -194,5 +166,5 @@
     <input type="submit" value="Predict" onclick="predict();" />
     <input type="submit" value="Clear" onclick="clearCanvas(canvas,ctx);" />
   </div>
-  <div id="rightside" class="rightside"></div>
+  <pre id="results"></pre>
 </div>

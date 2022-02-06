@@ -1,6 +1,7 @@
 ---
 title: Lab 4 - Voice
 weight: 0
+description: Biometrics - speaker recognition, speaker idetification, text-to-speech.
 ---
 
 # Voice biometrics

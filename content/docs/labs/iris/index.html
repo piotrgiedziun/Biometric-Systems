@@ -1,0 +1,262 @@
+<head>
+  <style>
+    .leftside {
+      width: 150px;
+      height: 200px;
+    }
+    #sketchpad {
+      float: left;
+      height: 140px;
+      width: 140px;
+      border: 2px solid #888;
+      border-radius: 4px;
+      position: relative;
+      background-color: black;
+    }
+    #demo {
+      display: none;
+    }
+    input[type="submit"] {
+      background-color: rgb(59, 59, 59);
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.13.0/dist/tf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js"></script>
+
+  <script type="text/javascript">
+    let model, results, canvas, ctx, touchX, touchY;
+    let mouseX,
+      mouseY,
+      mouseDown = 0;
+    let lastX,
+      lastY = -1;
+    let maxX = 0;
+    let maxY = 0;
+    let minX = 9999;
+    let minY = 9999;
+    let images = [];
+
+    function drawLine(ctx, x, y, size) {
+      if (lastX === -1) {
+        lastX = x;
+        lastY = y;
+      }
+
+      ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+      ctx.lineCap = "round";
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(x, y);
+      ctx.lineWidth = size;
+      ctx.stroke();
+      ctx.closePath();
+      lastX = x;
+      lastY = y;
+      if (x > maxX || !maxX) maxX = x;
+      if (x < minX || !minX) minX = x;
+      if (y > maxY || !maxY) maxY = y;
+      if (y < minY || !minY) minY = y;
+    }
+
+    function clearCanvas(canvas, ctx) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      maxX = -1;
+      maxY = -1;
+      minX = 9999;
+      minY = 9999;
+    }
+
+    function sketchpad_mouseDown() {
+      mouseDown = 1;
+      drawLine(ctx, mouseX, mouseY, 12);
+    }
+
+    function sketchpad_mouseUp() {
+      mouseDown = 0;
+      lastX = -1;
+      lastY = -1;
+    }
+
+    function sketchpad_mouseMove(e) {
+      getMousePos(e);
+
+      if (mouseDown === 1) {
+        drawLine(ctx, mouseX, mouseY, 12);
+      }
+    }
+
+    function getMousePos(e) {
+      if (e.offsetX) {
+        mouseX = e.offsetX;
+        mouseY = e.offsetY;
+      } else if (e.layerX) {
+        mouseX = e.layerX;
+        mouseY = e.layerY;
+      }
+    }
+
+    function sketchpad_touchStart(e) {
+      getTouchPos();
+      drawLine(ctx, touchX, touchY, 12);
+      e.preventDefault();
+    }
+
+    function sketchpad_touchEnd() {
+      lastX = -1;
+      lastY = -1;
+    }
+
+    function sketchpad_touchMove(e) {
+      getTouchPos(e);
+      drawLine(ctx, touchX, touchY, 12);
+      e.preventDefault();
+    }
+
+    function getTouchPos(e) {
+      if (e.touches) {
+        if (e.touches.length === 1) {
+          var touch = e.touches[0];
+          touchX = touch.pageX - touch.target.offsetLeft;
+          touchY = touch.pageY - touch.target.offsetTop;
+        }
+      }
+    }
+
+    function setupDatGui() {
+      const gui = new dat.GUI();
+      gui
+        .add(state, "backend", ["wasm", "webgl", "cpu"])
+        .onChange(async (backend) => {
+          await tf.setBackend(backend);
+        });
+      gui.add(state, "maxFaces", 1, 20, 1).onChange(async (val) => {
+        model = null;
+      });
+      gui.add(state, "bbox");
+      gui.add(state, "mesh");
+    }
+
+    function dot(a, b) {
+      var hasOwnProperty = Object.prototype.hasOwnProperty;
+      var sum = 0;
+
+      for (var key in a) {
+        if (hasOwnProperty.call(a, key) && hasOwnProperty.call(b, key)) {
+          sum += a[key] * b[key];
+        }
+      }
+
+      return sum;
+    }
+
+    function similarity(a, b) {
+      var magnitudeA = Math.sqrt(dot(a, a));
+      var magnitudeB = Math.sqrt(dot(b, b));
+      return dot(a, b) / (magnitudeA * magnitudeB);
+    }
+
+    function loadImage(src) {
+      return new Promise((resolve, reject) => {
+        let img = new Image();
+        img.crossOrigin = "anonymous";
+
+        img.onload = () => resolve(img);
+
+        img.onerror = reject;
+        img.src = src;
+      });
+    }
+
+    async function predictAll() {
+      const padding = 20;
+      const imageData = ctx.getImageData(
+        Math.max(0, minX - padding),
+        Math.max(0, minY - padding),
+        Math.min(140, maxX + padding),
+        Math.min(140, maxY + padding)
+      );
+      const a = await infer(imageData);
+      const res = document.createTextNode(`id\tdistance\n`);
+      results.appendChild(res);
+
+      for (let i = 0; i < 9; i++) {
+        const b = await infer(images[i]);
+        const res = document.createTextNode(`${i}\t${Math.round(100*similarity(a, b))/100}\n`);
+        results.appendChild(res);
+      }
+    }
+
+    async function infer(img) {
+      return tf
+        .tidy(() => {
+          const IMAGE_SIZE = 28;
+          img = tf.browser.fromPixels(img, 1);
+          img = tf.image.resizeBilinear(img, [28, 28]);
+          const normalized = tf.add(
+            tf.div(tf.cast(img, "float32"), 255.0),
+            0.0
+          );
+          const batched = tf.reshape(normalized, [
+            -1,
+            IMAGE_SIZE,
+            IMAGE_SIZE,
+            1,
+          ]);
+          return model.predict(batched);
+        })
+        .data();
+    }
+
+    async function init() {
+      canvas = document.getElementById("sketchpad");
+      ctx = canvas.getContext("2d");
+      results = document.getElementById("results");
+
+      if (ctx) {
+        canvas.addEventListener("mousedown", sketchpad_mouseDown, false);
+        canvas.addEventListener("mousemove", sketchpad_mouseMove, false);
+        window.addEventListener("mouseup", sketchpad_mouseUp, false);
+        canvas.addEventListener("touchstart", sketchpad_touchStart, false);
+        canvas.addEventListener("touchend", sketchpad_touchEnd, false);
+        canvas.addEventListener("touchmove", sketchpad_touchMove, false);
+      }
+
+      document.getElementById("load").style.display = "none";
+      await tf.setBackend("wasm");
+      model = await tf.loadGraphModel("../iris/model.json");
+      images = await Promise.all([
+        loadImage("../iris/mnist/0.jpg"),
+        loadImage("../iris/mnist/1.jpg"),
+        loadImage("../iris/mnist/2.jpg"),
+        loadImage("../iris/mnist/3.jpg"),
+        loadImage("../iris/mnist/4.jpg"),
+        loadImage("../iris/mnist/5.jpg"),
+        loadImage("../iris/mnist/6.jpg"),
+        loadImage("../iris/mnist/7.jpg"),
+        loadImage("../iris/mnist/8.jpg"),
+        loadImage("../iris/mnist/9.jpg"),
+      ]);
+      document.getElementById("demo").style.display = "block";
+      document.getElementById("clear").addEventListener("click", () => {
+        clearCanvas(canvas, ctx);
+        results.innerHTML = "";
+      });
+      document.getElementById("predict").addEventListener("click", () => {
+        predictAll();
+      });
+    }
+  </script>
+</head>
+<body id="main">
+  <div id="load">
+    <input type="submit" value="Load demo" id="load" onclick="init();"/>
+  </div>
+  <div id="demo">
+    <div class="leftside">
+      <canvas id="sketchpad" height="140" width="140"></canvas>
+      <input type="submit" value="Predict" id="predict" />
+      <input type="submit" value="Clear" id="clear" />
+    </div>
+    <pre id="results"></pre>
+  </div>
+</body>

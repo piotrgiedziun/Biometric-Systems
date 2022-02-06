@@ -1,6 +1,7 @@
 ---
 title: Lab 2 - Face
 weight: 0
+description: Biometrics - face detection, face recognition and deep fakes.
 ---
 
 # Face biometrics
@@ -15,10 +16,9 @@ The class covers face detection, face recognition and methods of spoofing them w
 - https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_hog.html
 - https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html
 
-## Demo
+## Demo project
 
-[Example web app](https://b8zqw.csb.app/)
-
+{{< include-html "content/docs/labs/face/index.html" >}}
 ## Class content
 
 - Introduction to face detection algorithms (Histogram of Oriented Gradients, Haar Cascades, Deep Neural Network). The aim of the task is to get to know the methods and their strengths and weaknesses.
