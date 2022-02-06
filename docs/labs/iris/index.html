@@ -2,20 +2,18 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="Iris recognition #  Identifying the characteristics of the iris is a similar process to identifying it with the facial pattern and fingerprint. The system segments the image of the iris and then converts it into a pattern which is compared with the pattern. Iris readers often use an additional system to illuminate the eye with near-infrared light.
-  Pre-read (Required) #    https://www.tensorflow.org/addons/tutorials/losses_triplet  https://www.tensorflow.org/tensorboard/tensorboard_projector_plugin  https://www.">
+<meta name=description content="Biometrics - iris segmentation, pupil segmentation, iris recognition.">
 <meta name=theme-color content="#FFFFFF">
 <meta name=color-scheme content="light dark"><meta property="og:title" content="Lab 3 - Iris">
-<meta property="og:description" content="Iris recognition #  Identifying the characteristics of the iris is a similar process to identifying it with the facial pattern and fingerprint. The system segments the image of the iris and then converts it into a pattern which is compared with the pattern. Iris readers often use an additional system to illuminate the eye with near-infrared light.
-  Pre-read (Required) #    https://www.tensorflow.org/addons/tutorials/losses_triplet  https://www.tensorflow.org/tensorboard/tensorboard_projector_plugin  https://www.">
+<meta property="og:description" content="Biometrics - iris segmentation, pupil segmentation, iris recognition.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://piotrgiedziun.github.io/biometric-systems/docs/labs/iris/"><meta property="article:section" content="docs">
 <title>Lab 3 - Iris | Biometric Systems</title>
 <link rel=manifest href=/biometric-systems/manifest.json>
 <link rel=icon href=/biometric-systems/favicon.png type=image/x-icon>
-<link rel=stylesheet href=/biometric-systems/book.min.46181bc93375ba932026e753b37c40e6ff8bb16a9ef770c78bcc663e4577b1ba.css integrity="sha256-RhgbyTN1upMgJudTs3xA5v+LsWqe93DHi8xmPkV3sbo=" crossorigin=anonymous>
+<link rel=stylesheet href=/biometric-systems/book.min.95d69eb6bad8b9707ff2b5d8d9e31ce70a1b84f2ed7ffaf665ffcf00aa7993bd.css integrity="sha256-ldaetrrYuXB/8rXY2eMc5wobhPLtf/r2Zf/PAKp5k70=" crossorigin=anonymous>
 <script defer src=/biometric-systems/flexsearch.min.js></script>
-<script defer src=/biometric-systems/en.search.min.4c86d17d83352f8663b954e7204cb0a76d5441ded75476056daa7399859d5df7.js integrity="sha256-TIbRfYM1L4ZjuVTnIEywp21UQd7XVHYFbapzmYWdXfc=" crossorigin=anonymous></script>
+<script defer src=/biometric-systems/en.search.min.93e055065adb60334bd6d2c1b05662078e08645acb55272aa653ee87864a90b6.js integrity="sha256-k+BVBlrbYDNL1tLBsFZiB44IZFrLVScqplPuh4ZKkLY=" crossorigin=anonymous></script>
 <script defer src=/biometric-systems/sw.min.18aced77828c1f97f4e84fdf1973dcf78ed7f17c186f7b2564e89ad635321764.js integrity="sha256-GKztd4KMH5f06E/fGXPc947X8XwYb3slZOia1jUyF2Q=" crossorigin=anonymous></script>
 </head>
 <body dir=ltr>
@@ -83,6 +81,7 @@
 <li><a href=#iris-recognition>Iris recognition</a>
 <ul>
 <li><a href=#pre-read-required>Pre-read (Required)</a></li>
+<li><a href=#demo-project>Demo project</a></li>
 <li><a href=#class-content>Class content</a></li>
 </ul>
 </li>
@@ -110,6 +109,29 @@ Pre-read (Required)
 <li>
 <a href=https://www.v7labs.com/blog/image-segmentation-guide>https://www.v7labs.com/blog/image-segmentation-guide</a></li>
 </ul>
+<h2 id=demo-project>
+Demo project
+<a class=anchor href=#demo-project>#</a>
+</h2>
+<head>
+<style>.leftside{width:150px;height:200px}#sketchpad{float:left;height:140px;width:140px;border:2px solid #888;border-radius:4px;position:relative;background-color:#000}#demo{display:none}input[type=submit]{background-color:#3b3b3b}</style>
+<script src=https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.13.0/dist/tf.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-backend-wasm/dist/tf-backend-wasm.js></script>
+<script type=text/javascript>let model,results,canvas,ctx,touchX,touchY,mouseX,mouseY,mouseDown=0,lastX,lastY=-1,maxX=0,maxY=0,minX=9999,minY=9999,images=[];function drawLine(a,b,c,d){lastX===-1&&(lastX=b,lastY=c),a.strokeStyle="rgba(255, 255, 255, 1)",a.lineCap="round",a.beginPath(),a.moveTo(lastX,lastY),a.lineTo(b,c),a.lineWidth=d,a.stroke(),a.closePath(),lastX=b,lastY=c,(b>maxX||!maxX)&&(maxX=b),(b<minX||!minX)&&(minX=b),(c>maxY||!maxY)&&(maxY=c),(c<minY||!minY)&&(minY=c)}function clearCanvas(a,b){b.clearRect(0,0,a.width,a.height),maxX=-1,maxY=-1,minX=9999,minY=9999}function sketchpad_mouseDown(){mouseDown=1,drawLine(ctx,mouseX,mouseY,12)}function sketchpad_mouseUp(){mouseDown=0,lastX=-1,lastY=-1}function sketchpad_mouseMove(a){getMousePos(a),mouseDown===1&&drawLine(ctx,mouseX,mouseY,12)}function getMousePos(a){a.offsetX?(mouseX=a.offsetX,mouseY=a.offsetY):a.layerX&&(mouseX=a.layerX,mouseY=a.layerY)}function sketchpad_touchStart(a){getTouchPos(),drawLine(ctx,touchX,touchY,12),a.preventDefault()}function sketchpad_touchEnd(){lastX=-1,lastY=-1}function sketchpad_touchMove(a){getTouchPos(a),drawLine(ctx,touchX,touchY,12),a.preventDefault()}function getTouchPos(b){if(b.touches)if(b.touches.length===1){var a=b.touches[0];touchX=a.pageX-a.target.offsetLeft,touchY=a.pageY-a.target.offsetTop}}function setupDatGui(){const a=new dat.GUI;a.add(state,"backend",["wasm","webgl","cpu"]).onChange(async a=>{await tf.setBackend(a)}),a.add(state,"maxFaces",1,20,1).onChange(async a=>{model=null}),a.add(state,"bbox"),a.add(state,"mesh")}function dot(b,c){var d=Object.prototype.hasOwnProperty,e=0,a;for(a in b)d.call(b,a)&&d.call(c,a)&&(e+=b[a]*c[a]);return e}function similarity(a,b){var c=Math.sqrt(dot(a,a)),d=Math.sqrt(dot(b,b));return dot(a,b)/(c*d)}function loadImage(a){return new Promise((c,d)=>{let b=new Image;b.crossOrigin="anonymous",b.onload=()=>c(b),b.onerror=d,b.src=a})}async function predictAll(){const a=20,b=ctx.getImageData(Math.max(0,minX-a),Math.max(0,minY-a),Math.min(140,maxX+a),Math.min(140,maxY+a)),c=await infer(b),d=document.createTextNode(`id\tdistance\n`);results.appendChild(d);for(let a=0;a<9;a++){const b=await infer(images[a]),d=document.createTextNode(`${a}\t${Math.round(100*similarity(c,b))/100}\n`);results.appendChild(d)}}async function infer(a){return tf.tidy(()=>{const b=28;a=tf.browser.fromPixels(a,1),a=tf.image.resizeBilinear(a,[28,28]);const c=tf.add(tf.div(tf.cast(a,"float32"),255),0),d=tf.reshape(c,[-1,b,b,1]);return model.predict(d)}).data()}async function init(){canvas=document.getElementById("sketchpad"),ctx=canvas.getContext("2d"),results=document.getElementById("results"),ctx&&(canvas.addEventListener("mousedown",sketchpad_mouseDown,!1),canvas.addEventListener("mousemove",sketchpad_mouseMove,!1),window.addEventListener("mouseup",sketchpad_mouseUp,!1),canvas.addEventListener("touchstart",sketchpad_touchStart,!1),canvas.addEventListener("touchend",sketchpad_touchEnd,!1),canvas.addEventListener("touchmove",sketchpad_touchMove,!1)),document.getElementById("load").style.display="none",await tf.setBackend("wasm"),model=await tf.loadGraphModel("../iris/model.json"),images=await Promise.all([loadImage("../iris/mnist/0.jpg"),loadImage("../iris/mnist/1.jpg"),loadImage("../iris/mnist/2.jpg"),loadImage("../iris/mnist/3.jpg"),loadImage("../iris/mnist/4.jpg"),loadImage("../iris/mnist/5.jpg"),loadImage("../iris/mnist/6.jpg"),loadImage("../iris/mnist/7.jpg"),loadImage("../iris/mnist/8.jpg"),loadImage("../iris/mnist/9.jpg")]),document.getElementById("demo").style.display="block",document.getElementById("clear").addEventListener("click",()=>{clearCanvas(canvas,ctx),results.innerHTML=""}),document.getElementById("predict").addEventListener("click",()=>{predictAll()})}</script>
+</head>
+<body id=main>
+<div id=load>
+<input type=submit value="Load demo" id=load onclick=init()>
+</div>
+<div id=demo>
+<div class=leftside>
+<canvas id=sketchpad height=140 width=140></canvas>
+<input type=submit value=Predict id=predict>
+<input type=submit value=Clear id=clear>
+</div>
+<pre id=results></pre>
+</div>
+</body>
 <h2 id=class-content>
 Class content
 <a class=anchor href=#class-content>#</a>
@@ -136,8 +158,6 @@ Class content
 </div>
 <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
 </footer>
-<div class=book-comments>
-</div>
 <label for=menu-control class="hidden book-menu-overlay"></label>
 </div>
 <aside class=book-toc>
@@ -147,6 +167,7 @@ Class content
 <li><a href=#iris-recognition>Iris recognition</a>
 <ul>
 <li><a href=#pre-read-required>Pre-read (Required)</a></li>
+<li><a href=#demo-project>Demo project</a></li>
 <li><a href=#class-content>Class content</a></li>
 </ul>
 </li>

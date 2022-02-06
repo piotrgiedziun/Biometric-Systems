@@ -2,22 +2,18 @@
 <head>
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
-<meta name=description content="Face biometrics #  The class covers face detection, face recognition and methods of spoofing them with deep fakes.
-  Pre-read (Required) #    https://www.tensorflow.org/guide/keras/sequential_model  https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_hog.html  https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html  Demo #   Example web app
-Class content #   Introduction to face detection algorithms (Histogram of Oriented Gradients, Haar Cascades, Deep Neural Network). The aim of the task is to get to know the methods and their strengths and weaknesses.">
+<meta name=description content="Biometrics - face detection, face recognition and deep fakes.">
 <meta name=theme-color content="#FFFFFF">
 <meta name=color-scheme content="light dark"><meta property="og:title" content="Lab 2 - Face">
-<meta property="og:description" content="Face biometrics #  The class covers face detection, face recognition and methods of spoofing them with deep fakes.
-  Pre-read (Required) #    https://www.tensorflow.org/guide/keras/sequential_model  https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_hog.html  https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html  Demo #   Example web app
-Class content #   Introduction to face detection algorithms (Histogram of Oriented Gradients, Haar Cascades, Deep Neural Network). The aim of the task is to get to know the methods and their strengths and weaknesses.">
+<meta property="og:description" content="Biometrics - face detection, face recognition and deep fakes.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://piotrgiedziun.github.io/biometric-systems/docs/labs/face/"><meta property="article:section" content="docs">
 <title>Lab 2 - Face | Biometric Systems</title>
 <link rel=manifest href=/biometric-systems/manifest.json>
 <link rel=icon href=/biometric-systems/favicon.png type=image/x-icon>
-<link rel=stylesheet href=/biometric-systems/book.min.46181bc93375ba932026e753b37c40e6ff8bb16a9ef770c78bcc663e4577b1ba.css integrity="sha256-RhgbyTN1upMgJudTs3xA5v+LsWqe93DHi8xmPkV3sbo=" crossorigin=anonymous>
+<link rel=stylesheet href=/biometric-systems/book.min.95d69eb6bad8b9707ff2b5d8d9e31ce70a1b84f2ed7ffaf665ffcf00aa7993bd.css integrity="sha256-ldaetrrYuXB/8rXY2eMc5wobhPLtf/r2Zf/PAKp5k70=" crossorigin=anonymous>
 <script defer src=/biometric-systems/flexsearch.min.js></script>
-<script defer src=/biometric-systems/en.search.min.4c86d17d83352f8663b954e7204cb0a76d5441ded75476056daa7399859d5df7.js integrity="sha256-TIbRfYM1L4ZjuVTnIEywp21UQd7XVHYFbapzmYWdXfc=" crossorigin=anonymous></script>
+<script defer src=/biometric-systems/en.search.min.93e055065adb60334bd6d2c1b05662078e08645acb55272aa653ee87864a90b6.js integrity="sha256-k+BVBlrbYDNL1tLBsFZiB44IZFrLVScqplPuh4ZKkLY=" crossorigin=anonymous></script>
 <script defer src=/biometric-systems/sw.min.18aced77828c1f97f4e84fdf1973dcf78ed7f17c186f7b2564e89ad635321764.js integrity="sha256-GKztd4KMH5f06E/fGXPc947X8XwYb3slZOia1jUyF2Q=" crossorigin=anonymous></script>
 </head>
 <body dir=ltr>
@@ -85,7 +81,7 @@ Class content #   Introduction to face detection algorithms (Histogram of Orient
 <li><a href=#face-biometrics>Face biometrics</a>
 <ul>
 <li><a href=#pre-read-required>Pre-read (Required)</a></li>
-<li><a href=#demo>Demo</a></li>
+<li><a href=#demo-project>Demo project</a></li>
 <li><a href=#class-content>Class content</a></li>
 </ul>
 </li>
@@ -113,12 +109,11 @@ Pre-read (Required)
 <li>
 <a href=https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html>https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html</a></li>
 </ul>
-<h2 id=demo>
-Demo
-<a class=anchor href=#demo>#</a>
+<h2 id=demo-project>
+Demo project
+<a class=anchor href=#demo-project>#</a>
 </h2>
-<p>
-<a href=https://b8zqw.csb.app/>Example web app</a></p>
+<iframe src="https://codesandbox.io/embed/face-demo-b8zqw?fontsize=14&hidenavigation=1&theme=dark&view=preview" style=width:100%;height:500px;border:0;border-radius:4px;overflow:hidden title="face demo" allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking" sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"></iframe>
 <h2 id=class-content>
 Class content
 <a class=anchor href=#class-content>#</a>
@@ -145,8 +140,6 @@ Class content
 </div>
 <script>(function(){function a(c){const a=window.getSelection(),b=document.createRange();b.selectNodeContents(c),a.removeAllRanges(),a.addRange(b)}document.querySelectorAll("pre code").forEach(b=>{b.addEventListener("click",function(c){a(b.parentElement),navigator.clipboard&&navigator.clipboard.writeText(b.parentElement.textContent)})})})()</script>
 </footer>
-<div class=book-comments>
-</div>
 <label for=menu-control class="hidden book-menu-overlay"></label>
 </div>
 <aside class=book-toc>
@@ -156,7 +149,7 @@ Class content
 <li><a href=#face-biometrics>Face biometrics</a>
 <ul>
 <li><a href=#pre-read-required>Pre-read (Required)</a></li>
-<li><a href=#demo>Demo</a></li>
+<li><a href=#demo-project>Demo project</a></li>
 <li><a href=#class-content>Class content</a></li>
 </ul>
 </li>
