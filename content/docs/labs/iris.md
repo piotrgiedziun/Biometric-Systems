@@ -8,8 +8,6 @@ description: Biometrics - iris segmentation, pupil segmentation, iris recognitio
 
 Identifying the characteristics of the iris is a similar process to identifying it with the facial pattern and fingerprint. The system segments the image of the iris and then converts it into a pattern which is compared with the pattern. Iris readers often use an additional system to illuminate the eye with near-infrared light.
 
-{{< youtube XI066IGEONw >}}
-
 ## Pre-read (Required)
 
 - https://www.tensorflow.org/addons/tutorials/losses_triplet
@@ -17,6 +15,9 @@ Identifying the characteristics of the iris is a similar process to identifying 
 - https://www.v7labs.com/blog/image-segmentation-guide
 
 ## Demo project
+
+This project implements image similarity (using triplet loss) for handwritten digits.
+The table presented as result is a list of cosine similarities for each digit (0-9) to the drawn image.
 
 {{< include-html "content/docs/labs/iris/index.html" >}}
 

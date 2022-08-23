@@ -113,11 +113,12 @@
     }
 
     function getTouchPos(e) {
+      var rect = canvas.getBoundingClientRect();
       if (e.touches) {
         if (e.touches.length === 1) {
           var touch = e.touches[0];
-          touchX = touch.pageX - touch.target.offsetLeft;
-          touchY = touch.pageY - touch.target.offsetTop;
+          touchX = touch.clientX - rect.left;
+          touchY = touch.clientY - rect.top;
         }
       }
     }
@@ -176,7 +177,7 @@
         Math.min(140, maxY + padding)
       );
       const a = await infer(imageData);
-      const res = document.createTextNode(`id\tdistance\n`);
+      const res = document.createTextNode(`id\tsimilarity\n`);
       results.appendChild(res);
 
       for (let i = 0; i < 9; i++) {
@@ -237,12 +238,10 @@
         loadImage("../iris/mnist/9.jpg"),
       ]);
       document.getElementById("demo").style.display = "block";
-      document.getElementById("clear").addEventListener("click", () => {
-        clearCanvas(canvas, ctx);
-        results.innerHTML = "";
-      });
       document.getElementById("predict").addEventListener("click", () => {
+        results.innerHTML = "";
         predictAll();
+        clearCanvas(canvas, ctx);
       });
     }
   </script>
@@ -254,8 +253,7 @@
   <div id="demo">
     <div class="leftside">
       <canvas id="sketchpad" height="140" width="140"></canvas>
-      <input type="submit" value="Predict" id="predict" />
-      <input type="submit" value="Clear" id="clear" />
+      <input type="submit" value="Calculate embedding" id="predict" />
     </div>
     <pre id="results"></pre>
   </div>

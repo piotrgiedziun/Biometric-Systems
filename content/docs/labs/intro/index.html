@@ -81,11 +81,12 @@
     }
 
     function getTouchPos(e) {
+      var rect = canvas.getBoundingClientRect();
       if (e.touches) {
-        if (e.touches.length == 1) {
-          let touch = e.touches[0];
-          touchX = touch.pageX - touch.target.offsetLeft;
-          touchY = touch.pageY - touch.target.offsetTop;
+        if (e.touches.length === 1) {
+          var touch = e.touches[0];
+          touchX = touch.clientX - rect.left;
+          touchY = touch.clientY - rect.top;
         }
       }
     }
@@ -103,10 +104,16 @@
         canvas.addEventListener("touchend", sketchpad_touchEnd, false);
         canvas.addEventListener("touchmove", sketchpad_touchMove, false);
       }
+      document.getElementById("predict").addEventListener("click", () => {
+        results.innerHTML = "";
+        predict();
+        clearCanvas(canvas, ctx);
+      });
       document.getElementById("load").style.display = "none";
       await tf.setBackend("wasm");
       model = await tf.loadLayersModel("../intro/model.json");
       document.getElementById("demo").style.display = "block";
+      
     }
 
     function predict() {
@@ -163,8 +170,7 @@
 <div id="demo">
   <div class="leftside">
     <canvas id="sketchpad" height="140" width="140"></canvas>
-    <input type="submit" value="Predict" onclick="predict();" />
-    <input type="submit" value="Clear" onclick="clearCanvas(canvas,ctx);" />
+    <input type="submit" value="Predict" id="predict" />
   </div>
   <pre id="results"></pre>
 </div>
