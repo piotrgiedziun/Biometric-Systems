@@ -1,14 +1,14 @@
 {
   "name": "Biometric Systems",
   "short_name": "Biometric Systems",
-  "start_url": "/biometric-systems/",
-  "scope": "/biometric-systems/",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
   "icons": [
     {
-      "src": "/biometric-systems/favicon.svg",
+      "src": "/favicon.svg",
       "sizes": "512x512"
     }
   ]
